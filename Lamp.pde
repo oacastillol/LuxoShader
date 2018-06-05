@@ -10,7 +10,6 @@
 public class Lamp implements PConstants {
   Scene scene;
   LampShape[] frameArray;
-
   Lamp(Scene s) {
     scene = s;
     frameArray = new LampShape[4];
@@ -60,9 +59,34 @@ public class Lamp implements PConstants {
   }
 
   public class LampShape extends OrbitShape {
-    int mode;
+    int mode;    
+    PShader shdr;
     public LampShape(Scene scene) {
       super(scene);
+       shdr=new PShader(scene.pApplet(), new String[] {"#version 150"
+    ,"in vec4 position,normal;"
+    +"uniform mat4 projectionMatrix,modelviewMatrix;"
+    // the key here is flat default is smooth interpolation 
+    +"flat out vec3 vN;"
+    +"void main() {"
+    // normal matrix
+    +"mat4 nrm_Mtrx = transpose(inverse(modelviewMatrix));"
+    // vertex normal
+    +"vN = normalize(vec3(nrm_Mtrx*vec4(normal.xyz,0.)).xyz);"
+    +"gl_Position = projectionMatrix*modelviewMatrix*position;"
+    +"}"
+    }, new String[] {"#version 150"
+      ,"flat in vec3 vN;"
+      +"uniform vec3 LDir;"
+      +"uniform vec3 surfaceColor;"
+      +"out vec4 fragColor;"
+      +"void main() {"
+      // simpel diffuse
+      +"float brightness = clamp( max(0., dot(vN, normalize(LDir) ) ) ,0.,1.);"
+      +"fragColor.rgb = brightness * surfaceColor;" 
+      +"fragColor.a=1.0;"
+      +"}"
+    });
     }
 
     public void drawCone(PGraphics pg, float zMin, float zMax, float r1, float r2, int nbSub) {
@@ -98,7 +122,13 @@ public class Lamp implements PConstants {
           drawCone(pGraphics, -2, 6, 4, 4, 30);
           drawCone(pGraphics, 6, 15, 4, 17, 30);
           drawCone(pGraphics, 15, 17, 17, 17, 30);
-          pGraphics.spotLight(155, 255, 255, 0, 0, 0, 0, 0, 1, THIRD_PI, 1);
+          
+          shdr.set("LDir", 0f, 0f, 1f);
+ 
+  // range from 0 - 1
+          shdr.set("surfaceColor",.5f,.5f,1.f);
+          shader(shdr);
+          //pGraphics.spotLight(155, 255, 255, 0, 0, 0, 0, 0, 1, THIRD_PI, 1);
           break;
       }
     }

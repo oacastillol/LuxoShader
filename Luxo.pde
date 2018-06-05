@@ -37,7 +37,7 @@ void setup() {
 
 void draw() {
   background(0);
-  //lights();
+  lights();
 
   //draw the lamp
   scene.traverse();
