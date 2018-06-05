@@ -14,6 +14,8 @@
 ## Descripción
 Se realizo un modelo 3D en el cual se encuentra una lampara(Tomada del ejemplo Luxo de la libreria frames) la cual ilumina los objetos en el ambiente en este caso un cubo. El cubo que esta en medio de la iluminacion que genera la lampara deben mostrar una sombra haciendo uso del proceso de shadow map. La lampara permite interacción permitiendo mover el brazo y el cono de este e iluminar diferentes areas del mundo en el que se encuentra.
 
+## Trabajo a futuro
+Implementar correctamente shadowmap haciendo uso de la libreria frames.
 
 ## Referencias
 1. [Tutorial 16 : Shadow mapping](http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/)
