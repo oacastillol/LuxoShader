@@ -50,7 +50,7 @@ public class Lamp implements PConstants {
     LocalConstraint headConstraint = new LocalConstraint();
     headConstraint.setTranslationConstraint(AxisPlaneConstraint.Type.FORBIDDEN, new Vector(0.0f, 0.0f, 0.0f));
     frame(3).setConstraint(headConstraint);
-    print(frame(3).orientation());
+    //print(frame(3).orientation());
     //scene.setEye(frame(3));
   }
 
@@ -123,8 +123,10 @@ public class Lamp implements PConstants {
           drawCone(pGraphics, 6, 15, 4, 17, 30);
           drawCone(pGraphics, 15, 17, 17, 17, 30);
           
-          shdr.set("LDir", 0f, 0f, 1f);
- 
+          shdr.set("LDir", this.orientation().x(),this.orientation().y(), this.orientation().z());
+          println('x',this.orientation().x());
+          println('y',this.orientation().y());
+          println('z',this.orientation().z());
   // range from 0 - 1
           shdr.set("surfaceColor",.5f,.5f,1.f);
           shader(shdr);
