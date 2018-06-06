@@ -18,7 +18,7 @@ import frames.primitives.constraint.*;
 
 Scene scene;
 Lamp lamp;
-
+PShader lightShader;
 Box caja;
 
 void setup() {
@@ -33,12 +33,13 @@ void setup() {
   scene.fitBallInterpolation();
   lamp = new Lamp(scene);
   caja = new Box();
+ // lightShader = loadShader("lightfrag.glsl", "lightvert.glsl");
 }
 
 void draw() {
   background(0);
-  lights();
-
+//  lights();
+  //shader(lightShader);
   //draw the lamp
   scene.traverse();
 
